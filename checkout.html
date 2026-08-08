@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Ethnic Cart</title>
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:Arial,sans-serif;background:#f7f4f0;color:#222;
+    }
+    .header{
+      background:#111;color:#fff;padding:18px 16px;text-align:center;
+      font-size:24px;font-weight:700;letter-spacing:.5px;
+    }
+    .container{max-width:900px;margin:25px auto;padding:0 15px}
+    .card{
+      background:#fff;border-radius:14px;padding:20px;margin-bottom:18px;
+      box-shadow:0 3px 15px rgba(0,0,0,.08)
+    }
+    h2{margin-top:0;font-size:20px}
+    label{display:block;margin:12px 0 6px;font-weight:600}
+    input,textarea,select{
+      width:100%;padding:13px;border:1px solid #ccc;border-radius:8px;
+      font-size:16px;background:#fff
+    }
+    textarea{min-height:90px;resize:vertical}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .summary-item{
+      display:flex;justify-content:space-between;gap:15px;
+      padding:10px 0;border-bottom:1px solid #eee
+    }
+    .total{
+      display:flex;justify-content:space-between;font-size:20px;
+      font-weight:700;padding-top:15px
+    }
+    .btn{
+      width:100%;border:0;border-radius:9px;padding:15px;
+      font-size:17px;font-weight:700;cursor:pointer;margin-top:15px
+    }
+    .place{background:#111;color:#fff}
+    .back{background:#eee;color:#222}
+    .success{display:none;text-align:center}
+    .success h2{color:#16803c}
+    .note{font-size:13px;color:#666;line-height:1.5}
+    @media(max-width:600px){.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<div class="header">Ethnic Cart — Checkout</div>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Order Summary</h2>
+    <div id="cartItems"></div>
+    <div class="total">
+      <span>Total</span>
+      <span id="total">₹0</span>
+    </div>
+    <p class="note">Prices shown here are temporary/demo prices until your final product prices are added.</p>
+  </div>
+
+  <div class="card" id="checkoutCard">
+    <h2>Customer Details</h2>
+
+    <form id="checkoutForm">
+      <div class="row">
+        <div>
+          <label for="name">Full Name *</label>
+          <input id="name" required placeholder="Enter your name">
+        </div>
+        <div>
+          <label for="phone">Mobile Number *</label>
+          <input id="phone" type="tel" required placeholder="10-digit mobile number"
+                 pattern="[0-9]{10}">
+        </div>
+      </div>
+
+      <label for="address">Full Address *</label>
+      <textarea id="address" required placeholder="House no., street, area"></textarea>
+
+      <div class="row">
+        <div>
+          <label for="city">City *</label>
+          <input id="city" required placeholder="City">
+        </div>
+        <div>
+          <label for="pincode">PIN Code *</label>
+          <input id="pincode" required inputmode="numeric"
+                 pattern="[0-9]{6}" placeholder="6-digit PIN">
+        </div>
+      </div>
+
+      <label for="payment">Payment Method</label>
+      <select id="payment">
+        <option value="Cash on Delivery">Cash on Delivery</option>
+        <option value="UPI">UPI (payment setup required)</option>
+      </select>
+
+      <button class="btn place" type="submit">Place Order</button>
+      <button class="btn back" type="button" onclick="history.back()">← Back to Shopping</button>
+    </form>
+  </div>
+
+  <div class="card success" id="success">
+    <h2>🎉 Order Placed Successfully!</h2>
+    <p id="orderMessage"></p>
+    <button class="btn place" onclick="location.href='index.html'">Continue Shopping</button>
+  </div>
+
+</div>
+
+<script>
+  // Temporary/demo cart data.
+  // If your main website already saves a cart in localStorage under "cart",
+  // this page will try to read it automatically.
+  const DEMO_CART = [
+    { name: "Ethnic Dress", price: 999, qty: 1 }
+  ];
+
+  function getCart() {
+    try {
+      const saved = localStorage.getItem("cart");
+      if (!saved) return DEMO_CART;
+      const parsed = JSON.parse(saved);
+      if (!Array.isArray(parsed) || parsed.length === 0) return DEMO_CART;
+
+      return parsed.map(item => ({
+        name: item.name || item.title || "Product",
+        price: Number(item.price) || 0,
+        qty: Number(item.qty || item.quantity || 1)
+      }));
+    } catch {
+      return DEMO_CART;
+    }
+  }
+
+  const cart = getCart();
+  const cartItems = document.getElementById("cartItems");
+  const totalEl = document.getElementById("total");
+
+  let total = 0;
+
+  cart.forEach(item => {
+    const lineTotal = item.price * item.qty;
+    total += lineTotal;
+
+    const div = document.createElement("div");
+    div.className = "summary-item";
+    div.innerHTML = `
+      <span>${escapeHtml(item.name)} × ${item.qty}</span>
+      <strong>₹${lineTotal.toLocaleString("en-IN")}</strong>
+    `;
+    cartItems.appendChild(div);
+  });
+
+  totalEl.textContent = "₹" + total.toLocaleString("en-IN");
+
+  function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const pincode = document.getElementById("pincode").value.trim();
+    const payment = document.getElementById("payment").value;
+
+    const orderId = "EC" + Date.now().toString().slice(-8);
+
+    // Save order locally for demo/testing.
+    const order = {
+      orderId, name, phone, address, city, pincode, payment,
+      items: cart,
+      total,
+      date: new Date().toISOString()
+    };
+
+    localStorage.setItem("lastOrder", JSON.stringify(order));
+
+    document.getElementById("checkoutCard").style.display = "none";
+    document.getElementById("success").style.display = "block";
+    document.getElementById("orderMessage").innerHTML =
+      `Thank you, <strong>${escapeHtml(name)}</strong>.<br>
+       Your order ID is <strong>${orderId}</strong>.<br>
+       Total amount: <strong>₹${total.toLocaleString("en-IN")}</strong><br>
+       Payment: <strong>${escapeHtml(payment)}</strong>`;
+  });
+</script>
+
+</body>
+</html>
