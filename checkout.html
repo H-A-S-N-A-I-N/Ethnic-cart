@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | Ethnic Cart</title>
+<meta name="description" content="Secure checkout for Ethnic Cart - Banarasi sarees and suits from Varanasi.">
+<style>
+:root{
+  --maroon:#7d1734;
+  --maroon-dark:#571026;
+  --cream:#fbf7ef;
+  --gold:#b99a5b;
+  --ink:#292322;
+  --muted:#756d69;
+  --line:#e7ddd2;
+  --white:#fff;
+  --green:#168a4b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--cream);color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;
+}
+a{color:inherit}
+.topbar{
+  background:var(--maroon);color:#fff;text-align:center;
+  padding:8px 14px;font-size:12px;letter-spacing:.15px
+}
+.nav{
+  background:#fff;border-bottom:1px solid var(--line);
+  min-height:78px;padding:13px 5%;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  position:sticky;top:0;z-index:20
+}
+.brand{display:inline-block;text-decoration:none}
+.brand-name{
+  font:700 25px Georgia,serif;color:var(--maroon);letter-spacing:.3px
+}
+.brand-tag{
+  display:block;margin-top:3px;color:var(--gold);
+  font-size:9px;letter-spacing:3px
+}
+.navlinks{display:flex;gap:25px;font-size:13px}
+.navlinks a{text-decoration:none;font-weight:600}
+.navlinks a:hover{color:var(--maroon)}
+.cart-pill{
+  border:1px solid #dfd4c8;background:#fff;border-radius:24px;
+  padding:10px 15px;color:var(--maroon);font-weight:700;white-space:nowrap
+}
+.hero{
+  background:
+    radial-gradient(circle at 15% 25%,rgba(255,255,255,.10),transparent 25%),
+    linear-gradient(120deg,var(--maroon-dark),#9c1d43,var(--maroon));
+  color:#fff;text-align:center;padding:42px 18px
+}
+.hero .eyebrow{
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:#ead7a8;margin-bottom:10px
+}
+.hero h1{font:700 40px Georgia,serif;margin:0 0 8px}
+.hero p{margin:0;color:#f8e9ed;font-size:14px}
+.wrap{max-width:1080px;margin:34px auto;padding:0 18px}
+.checkout-grid{
+  display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,.85fr);
+  gap:22px;align-items:start
+}
+.card{
+  background:var(--white);border:1px solid var(--line);
+  border-radius:14px;box-shadow:0 8px 28px rgba(65,36,27,.05)
+}
+.card-head{padding:22px 22px 14px}
+.card-head h2{
+  margin:0;color:var(--maroon);font:700 24px Georgia,serif
+}
+.card-head p{margin:7px 0 0;color:var(--muted);font-size:13px}
+.card-body{padding:0 22px 22px}
+.item{
+  display:grid;grid-template-columns:72px 1fr auto;gap:14px;
+  padding:16px 0;border-bottom:1px solid #eee6de;align-items:center
+}
+.item:last-child{border-bottom:0}
+.item img{
+  width:72px;height:88px;object-fit:cover;border-radius:9px;
+  border:1px solid #e5d9cf;background:#f5eee6
+}
+.item-info{min-width:0}
+.item-name{font-weight:700;font-size:14px;line-height:1.35}
+.item-unit{font-size:12px;color:var(--muted);margin-top:4px}
+.item-price{font-weight:700;color:var(--maroon);margin-top:6px}
+.item-actions{display:flex;align-items:center;gap:7px}
+.qty-btn{
+  width:31px;height:31px;border:1px solid #ddd2c7;border-radius:7px;
+  background:#fff;color:var(--ink);font-size:17px;cursor:pointer
+}
+.qty-btn:hover{border-color:var(--maroon);color:var(--maroon)}
+.qty-num{min-width:18px;text-align:center;font-size:13px;font-weight:700}
+.remove-btn{
+  border:0;background:transparent;color:#9b8f88;cursor:pointer;
+  font-size:18px;padding:4px 2px;margin-left:3px
+}
+.remove-btn:hover{color:#b11f3e}
+.empty{
+  padding:34px 10px;text-align:center;color:var(--muted)
+}
+.empty a{
+  display:inline-block;margin-top:12px;background:var(--maroon);color:#fff;
+  padding:10px 16px;border-radius:7px;text-decoration:none;font-weight:700
+}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{
+  display:block;font-size:12px;font-weight:700;margin:0 0 6px;color:#514943
+}
+input,textarea,select{
+  width:100%;padding:12px 13px;border:1px solid #d9cec3;
+  border-radius:8px;background:#fff;color:var(--ink);
+  font:14px Arial,sans-serif;outline:none;transition:.2s
+}
+input:focus,textarea:focus,select:focus{
+  border-color:var(--maroon);box-shadow:0 0 0 3px rgba(125,23,52,.08)
+}
+textarea{min-height:92px;resize:vertical}
+.form-group{margin-bottom:13px}
+.hint{font-size:11px;color:#8a7e77;margin-top:-7px;margin-bottom:13px}
+.secure-row{
+  display:flex;gap:10px;flex-wrap:wrap;margin:3px 0 18px
+}
+.badge{
+  border:1px solid #e4dbd1;background:#fbf8f4;border-radius:20px;
+  padding:7px 10px;font-size:11px;color:#5f5651
+}
+.badge strong{color:var(--green)}
+.order-card{position:sticky;top:100px}
+.summary{padding:0 22px 22px}
+.summary-line{
+  display:flex;justify-content:space-between;gap:15px;
+  padding:9px 0;font-size:14px
+}
+.summary-line.muted{color:var(--muted)}
+.summary-line.total{
+  border-top:1px dashed #d8cec4;margin-top:7px;padding-top:15px;
+  font-size:19px;font-weight:800;color:var(--maroon)
+}
+.free{
+  color:var(--green);font-weight:700
+}
+.shipping-note{
+  margin:0 0 14px;padding:11px 12px;border-radius:8px;
+  background:#f8f2e8;color:#665747;font-size:12px;line-height:1.45
+}
+.progress{
+  height:7px;background:#eee5dc;border-radius:20px;overflow:hidden;margin:8px 0 4px
+}
+.progress span{display:block;height:100%;background:var(--gold);border-radius:20px}
+.progress-text{font-size:11px;color:#786e67}
+.cod-box{
+  border:1px solid #eadfd4;background:#fbf8f4;border-radius:9px;
+  padding:12px;margin-bottom:14px
+}
+.cod-title{font-weight:700;font-size:13px}
+.cod-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.whatsapp{
+  width:100%;border:0;border-radius:9px;padding:14px 16px;
+  background:var(--maroon);color:#fff;font-size:14px;font-weight:800;
+  cursor:pointer;box-shadow:0 7px 18px rgba(125,23,52,.20)
+}
+.whatsapp:hover{background:var(--maroon-dark)}
+.whatsapp:disabled{opacity:.55;cursor:not-allowed}
+.notice{
+  display:none;margin-top:11px;padding:11px 12px;border-radius:8px;
+  background:#eaf8ef;color:#176d39;font-size:12px;line-height:1.45
+}
+.notice.show{display:block}
+.small-print{
+  margin:12px 0 0;text-align:center;color:#8a7f78;font-size:10px;line-height:1.5
+}
+.footer{
+  background:#241e1d;color:#ddd;padding:42px 5%;margin-top:65px;
+  display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:35px
+}
+.footer h3{font:700 20px Georgia,serif;color:#d9bd7d;margin:0 0 12px}
+.footer p,.footer a{font-size:12px;line-height:1.8;color:#d7d0cc}
+.footer a{text-decoration:none;display:block}
+.copyright{
+  grid-column:1/-1;border-top:1px solid #493c38;padding-top:16px;
+  text-align:center;color:#aaa;font-size:11px
+}
+@media(max-width:800px){
+  .checkout-grid{grid-template-columns:1fr}
+  .order-card{position:static}
+}
+@media(max-width:650px){
+  .nav{padding:11px 4%;min-height:68px}
+  .brand-name{font-size:20px}
+  .brand-tag{font-size:7px;letter-spacing:2px}
+  .navlinks{display:none}
+  .hero{padding:34px 15px}
+  .hero h1{font-size:34px}
+  .wrap{margin-top:22px;padding:0 12px}
+  .field-row{grid-template-columns:1fr}
+  .card-head{padding:18px 16px 12px}
+  .card-body,.summary{padding-left:16px;padding-right:16px}
+  .item{grid-template-columns:58px 1fr;gap:11px}
+  .item img{width:58px;height:74px}
+  .item-actions{grid-column:2;justify-content:flex-start;margin-top:-4px}
+  .footer{grid-template-columns:1fr;padding:34px 7%}
+  .copyright{grid-column:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">✨ Free shipping on orders above ₹2,999 • Handpicked Banarasi Collection from Varanasi</div>
+
+<header class="nav">
+  <a class="brand" href="index.html" aria-label="Ethnic Cart Home">
+    <span class="brand-name">ETHNIC CART</span>
+    <span class="brand-tag">TRADITION • ELEGANCE • VARANASI</span>
+  </a>
+  <nav class="navlinks" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="index.html">Shop</a>
+    <a href="index.html">Sarees</a>
+    <a href="index.html">Suits</a>
+    <a href="index.html">Contact</a>
+  </nav>
+  <div class="cart-pill">🛒 Cart <span id="cartCount">0</span></div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Ethnic Cart • Varanasi</div>
+  <h1>Secure Checkout</h1>
+  <p>Complete your details and place your order on WhatsApp</p>
+</section>
+
+<main class="wrap">
+  <div class="checkout-grid">
+
+    <section>
+      <div class="card">
+        <div class="card-head">
+          <h2>1. Your Order</h2>
+          <p>Review your selected pieces before placing the order.</p>
+        </div>
+        <div class="card-body" id="items"></div>
+      </div>
+
+      <div class="card" style="margin-top:22px">
+        <div class="card-head">
+          <h2>2. Delivery Details</h2>
+          <p>Enter accurate details so we can prepare your WhatsApp order.</p>
+        </div>
+        <div class="card-body">
+          <div class="secure-row">
+            <div class="badge">✓ <strong>Simple checkout</strong></div>
+            <div class="badge">📦 Carefully packed</div>
+            <div class="badge">💬 WhatsApp confirmation</div>
+          </div>
+
+          <form id="orderForm" novalidate>
+            <div class="field-row">
+              <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input id="name" required autocomplete="name" placeholder="Enter your full name">
+              </div>
+              <div class="form-group">
+                <label for="phone">Mobile Number *</label>
+                <input id="phone" required inputmode="numeric" maxlength="10" autocomplete="tel"
+                       pattern="[0-9]{10}" placeholder="10-digit mobile number">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">Full Delivery Address *</label>
+              <textarea id="address" required autocomplete="street-address"
+                        placeholder="House/Flat, Street, Area, City, State"></textarea>
+            </div>
+
+            <div class="field-row">
+              <div class="form-group">
+                <label for="pincode">Pincode *</label>
+                <input id="pincode" required inputmode="numeric" maxlength="6"
+                       pattern="[0-9]{6}" autocomplete="postal-code" placeholder="6-digit pincode">
+              </div>
+              <div class="form-group">
+                <label for="payment">Payment Method</label>
+                <select id="payment">
+                  <option>Cash on Delivery</option>
+                  <option>UPI</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="cod-box">
+              <div class="cod-title">💳 Cash on Delivery selected</div>
+              <div class="cod-sub">Payment can be collected at delivery. Final availability will be confirmed on WhatsApp.</div>
+            </div>
+
+            <button class="whatsapp" id="orderBtn" type="submit">💬 Continue on WhatsApp</button>
+            <div class="notice" id="notice">Opening WhatsApp with your order details…</div>
+            <div class="small-print">By continuing, your order details will be shared with Ethnic Cart on WhatsApp for order confirmation.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <aside class="card order-card">
+      <div class="card-head">
+        <h2>Order Summary</h2>
+        <p>Your final payable amount</p>
+      </div>
+      <div class="summary">
+        <div class="summary-line">
+          <span>Subtotal</span><strong id="subtotal">₹0</strong>
+        </div>
+        <div class="summary-line">
+          <span>Shipping</span><strong id="shipping">₹0</strong>
+        </div>
+
+        <div class="shipping-note" id="shippingNote">
+          Add items to see shipping details.
+          <div class="progress"><span id="progressBar" style="width:0%"></span></div>
+          <div class="progress-text" id="progressText"></div>
+        </div>
+
+        <div class="summary-line total">
+          <span>Total</span><span id="total">₹0</span>
+        </div>
+
+        <button class="whatsapp" id="sideOrderBtn" type="button">💬 Place Order on WhatsApp</button>
+        <p class="small-print">Your order is confirmed after WhatsApp conversation.</p>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div>
+    <h3>ETHNIC CART</h3>
+    <p>Authentic Indian elegance, curated in Varanasi. Discover Banarasi sarees and suits made for celebrations, gifting and timeless style.</p>
+  </div>
+  <div>
+    <h3>Quick Links</h3>
+    <a href="index.html">Shop Collection</a>
+    <a href="index.html">Home</a>
+    <a href="index.html">Contact Us</a>
+  </div>
+  <div>
+    <h3>Get in Touch</h3>
+    <p>📞 WhatsApp: 8765776100<br>✉️ ethniccartvns@gmail.com<br>📍 B.19/33, Deoriabeer Vijay Nagar Road, Bhelupur, Varanasi</p>
+  </div>
+  <div class="copyright">© 2026 ETHNIC CART • Varanasi, India</div>
+</footer>
+
+<script>
+const WHATSAPP_NUMBER = "918765776100";
+const FREE_SHIPPING_THRESHOLD = 2999;
+const SHIPPING_FEE = 99;
+
+function readCart(){
+  const keys = ["cart","cartItems","ethnicCart"];
+  for(const key of keys){
+    try{
+      const raw = localStorage.getItem(key);
+      if(!raw) continue;
+      const data = JSON.parse(raw);
+      if(Array.isArray(data) && data.length) return data;
+    }catch(e){}
+  }
+  return [];
+}
+
+function normalise(item){
+  return {
+    name: item.name || item.title || item.productName || "Product",
+    price: Number(item.price || item.amount || 0),
+    qty: Math.max(1, Number(item.qty || item.quantity || 1)),
+    image: item.image || item.img || ""
+  };
+}
+
+let cart = readCart().map(normalise);
+
+const itemsEl = document.getElementById("items");
+const totalEl = document.getElementById("total");
+const subtotalEl = document.getElementById("subtotal");
+const shippingEl = document.getElementById("shipping");
+const cartCountEl = document.getElementById("cartCount");
+const shippingNote = document.getElementById("shippingNote");
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
+const orderBtn = document.getElementById("orderBtn");
+const sideOrderBtn = document.getElementById("sideOrderBtn");
+
+let subtotal = 0;
+let shipping = 0;
+let total = 0;
+let count = 0;
+
+function money(n){
+  return "₹" + Number(n).toLocaleString("en-IN");
+}
+
+function render(){
+  itemsEl.innerHTML = "";
+  subtotal = 0;
+  count = 0;
+
+  if(!cart.length){
+    itemsEl.innerHTML = `
+      <div class="empty">
+        <div style="font-size:34px">🛍️</div>
+        <div style="margin-top:8px;font-weight:700;color:#514943">Your cart is empty</div>
+        <div style="margin-top:5px">Add a beautiful piece from our collection to continue.</div>
+        <a href="index.html">Continue Shopping</a>
+      </div>`;
+    orderBtn.disabled = true;
+    sideOrderBtn.disabled = true;
+  }else{
+    orderBtn.disabled = false;
+    sideOrderBtn.disabled = false;
+
+    cart.forEach((item,i)=>{
+      const line = item.price * item.qty;
+      subtotal += line;
+      count += item.qty;
+
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        ${item.image ? `<img src="${escapeAttr(item.image)}" alt="">` : `<div style="width:72px;height:88px;border-radius:9px;background:#f4ece4;display:grid;place-items:center">🧵</div>`}
+        <div class="item-info">
+          <div class="item-name">${escapeHtml(item.name)}</div>
+          <div class="item-unit">${money(item.price)} each</div>
+          <div class="item-price">${money(line)}</div>
+        </div>
+        <div class="item-actions">
+          <button class="qty-btn" type="button" onclick="changeQty(${i},-1)" aria-label="Decrease quantity">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" type="button" onclick="changeQty(${i},1)" aria-label="Increase quantity">+</button>
+          <button class="remove-btn" type="button" onclick="removeItem(${i})" aria-label="Remove item">×</button>
+        </div>`;
+      itemsEl.appendChild(div);
+    });
+  }
+
+  shipping = subtotal === 0 ? 0 : (subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE);
+  total = subtotal + shipping;
+
+  subtotalEl.textContent = money(subtotal);
+  shippingEl.innerHTML = shipping === 0 && subtotal > 0 ? '<span class="free">FREE</span>' : money(shipping);
+  totalEl.textContent = money(total);
+  cartCountEl.textContent = count;
+
+  if(subtotal === 0){
+    shippingNote.innerHTML = 'Add items to see shipping details.';
+    progressBar.style.width = "0%";
+    progressText.textContent = "";
+  }else if(subtotal >= FREE_SHIPPING_THRESHOLD){
+    shippingNote.innerHTML = `
+      🎉 <strong>Free shipping unlocked!</strong>
+      <div class="progress"><span id="progressBar" style="width:100%"></span></div>
+      <div class="progress-text">You qualify for free delivery.</div>`;
+  }else{
+    const remaining = FREE_SHIPPING_THRESHOLD - subtotal;
+    const pct = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
+    shippingNote.innerHTML = `
+      Add <strong>${money(remaining)}</strong> more to unlock free shipping.
+      <div class="progress"><span id="progressBar" style="width:${pct}%"></span></div>
+      <div class="progress-text">Free shipping on orders above ${money(FREE_SHIPPING_THRESHOLD)}</div>`;
+  }
+}
+
+function saveCart(){
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function changeQty(i, delta){
+  cart[i].qty += delta;
+  if(cart[i].qty <= 0) cart.splice(i,1);
+  saveCart();
+  render();
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  saveCart();
+  render();
+}
+
+function escapeHtml(value){
+  const d = document.createElement("div");
+  d.textContent = String(value);
+  return d.innerHTML;
+}
+
+function escapeAttr(value){
+  return String(value).replace(/"/g,"&quot;").replace(/</g,"&lt;");
+}
+
+function placeOrder(){
+  const form = document.getElementById("orderForm");
+
+  if(!cart.length){
+    alert("Your cart is empty.");
+    return;
+  }
+
+  if(!form.reportValidity()){
+    form.querySelector(":invalid")?.focus();
+    return;
+  }
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const pincode = document.getElementById("pincode").value.trim();
+  const payment = document.getElementById("payment").value;
+
+  const lines = [
+    "*ETHNIC CART - NEW ORDER*",
+    "",
+    "*Customer Details*",
+    "Name: " + name,
+    "Mobile: " + phone,
+    "Address: " + address,
+    "Pincode: " + pincode,
+    "Payment: " + payment,
+    "",
+    "*Order Items*"
+  ];
+
+  cart.forEach(item=>{
+    lines.push("• " + item.name + " × " + item.qty + " = " + money(item.price * item.qty));
+  });
+
+  lines.push("");
+  lines.push("Subtotal: " + money(subtotal));
+  lines.push("Shipping: " + (shipping === 0 ? "FREE" : money(shipping)));
+  lines.push("*Total: " + money(total) + "*");
+
+  const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
+
+  document.getElementById("notice").classList.add("show");
+  window.open(url, "_blank");
+}
+
+document.getElementById("orderForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  placeOrder();
+});
+
+sideOrderBtn.addEventListener("click", placeOrder);
+
+render();
+</script>
+</body>
+</html>
