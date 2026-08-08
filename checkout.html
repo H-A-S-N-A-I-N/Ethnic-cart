@@ -146,11 +146,139 @@ textarea{min-height:92px;resize:vertical}
   .step span:last-child{display:none}
   .footer-grid{grid-template-columns:1fr}
 }
+
+/* ===== ETHNIC CART PREMIUM CHECKOUT V2 ===== */
+:root{
+  --wine:#7d1735;
+  --wine-dark:#4f0d25;
+  --gold:#c9a45c;
+  --cream:#f8f3eb;
+  --paper:#fffefa;
+  --ink:#241d1e;
+  --muted:#756d6d;
+  --line:#eadfd5;
+  --green:#168b55;
+  --shadow:0 18px 50px rgba(70,30,40,.10);
+}
+body{background:
+  radial-gradient(circle at 10% 10%,rgba(201,164,92,.08),transparent 25%),
+  var(--cream);
+}
+.topbar{
+  background:linear-gradient(90deg,var(--wine-dark),var(--wine),var(--wine-dark));
+  font-size:12px;font-weight:700;letter-spacing:.35px;padding:9px 14px;
+}
+.nav{
+  padding:16px 5%;box-shadow:0 2px 18px rgba(50,25,30,.05);
+}
+.brand{font-size:26px}
+.cartpill{
+  display:inline-flex;align-items:center;gap:5px;
+  box-shadow:0 4px 12px rgba(125,23,53,.07);
+}
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 85% 20%,rgba(201,164,92,.22),transparent 28%),
+    linear-gradient(135deg,#4d0c24,#7d1735 55%,#8e2547);
+  padding:48px 5% 42px;
+}
+.hero:after{
+  content:"";position:absolute;inset:auto -10% -90px auto;
+  width:360px;height:180px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.12);
+  transform:rotate(-8deg);
+}
+.hero-inner{position:relative;z-index:1}
+.crumb{font-weight:700;letter-spacing:.4px}
+.hero h1{font-size:44px;letter-spacing:-.5px}
+.hero p{font-size:15px}
+.steps{
+  max-width:900px;background:#fff;margin:-1px auto 20px;
+  border:1px solid var(--line);border-radius:0 0 18px 18px;
+  box-shadow:0 10px 30px rgba(60,25,35,.06);position:relative;z-index:3;
+}
+.step{font-size:12px}
+.step.active{color:var(--wine)}
+.circle{font-weight:800}
+.layout{max-width:1180px;padding-top:8px}
+.card{
+  border-radius:20px;background:rgba(255,254,250,.96);
+  box-shadow:var(--shadow);border-color:#e8dbd0;
+}
+.checkout-kicker{
+  display:inline-flex;align-items:center;
+  color:var(--wine);background:#f7eadb;border:1px solid #ead8c0;
+  border-radius:999px;padding:7px 11px;font-size:10px;font-weight:800;
+  letter-spacing:1.1px;margin-bottom:11px;
+}
+.card h2{font-size:27px}
+.section-title{
+  padding-top:8px;border-top:1px solid #f0e7df;
+}
+.section-title:first-of-type{border-top:0}
+.badge{
+  box-shadow:0 4px 10px rgba(125,23,53,.08);
+}
+input,textarea,select{
+  border-color:#dfd2c8;background:#fffefd;
+  box-shadow:inset 0 1px 0 rgba(0,0,0,.02);
+}
+input::placeholder,textarea::placeholder{color:#a49b98}
+.payment{
+  box-shadow:0 6px 18px rgba(50,25,30,.04);
+  border-color:#decfc4;
+}
+.summary{
+  border-top:4px solid var(--gold);
+}
+.summary-head{
+  padding-bottom:14px;border-bottom:1px solid var(--line);
+}
+.item{
+  padding:9px 0;
+}
+.item img{
+  box-shadow:0 5px 14px rgba(60,30,35,.10);
+}
+.row{font-size:14px}
+.total{
+  padding:14px 12px;background:#faf1e6;border-radius:12px;
+  font-size:21px;
+}
+.trust div{
+  border:1px solid #eadfd3;
+  box-shadow:0 5px 12px rgba(60,30,35,.035);
+}
+.cta{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#7d1735,#9b294e);
+  min-height:52px;font-size:16px;
+  letter-spacing:.1px;
+}
+.cta:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.16) 50%,transparent 65%);
+  transform:translateX(-100%);transition:transform .5s;
+}
+.cta:hover:after{transform:translateX(100%)}
+.small-note{
+  padding:9px 12px;background:#f7f2eb;border-radius:9px;
+}
+.footer{margin-top:10px}
+@media(max-width:850px){
+  .hero h1{font-size:35px}
+  .steps{margin:0 4% 18px;border-radius:14px}
+  .layout{padding-top:0}
+  .card{border-radius:16px;padding:20px}
+  .summary{grid-row:1}
+}
+
 </style>
 </head>
 <body>
 
-<div class="topbar">✨ Free shipping on orders above ₹2,999 · Handpicked Banarasi Collection from Varanasi</div>
+<div class="topbar">✨ FREE SHIPPING ABOVE ₹2,999 &nbsp; • &nbsp; Handpicked Banarasi Collection from Varanasi</div>
 
 <nav class="nav">
   <a class="brand" href="index.html">ETHNIC CART<small>TRADITION · ELEGANCE · VARANASI</small></a>
@@ -164,8 +292,8 @@ textarea{min-height:92px;resize:vertical}
 <section class="hero">
   <div class="hero-inner">
     <div class="crumb">Home / Cart / Checkout</div>
-    <h1>Complete Your Order</h1>
-    <p>One final step to bring your Banarasi piece home.</p>
+    <h1>Secure Checkout</h1>
+    <p>Complete your delivery details and place your order securely on WhatsApp.</p>
   </div>
 </section>
 
@@ -177,9 +305,11 @@ textarea{min-height:92px;resize:vertical}
   <div class="step"><span class="circle">3</span><span>Confirmation</span></div>
 </div>
 
+<div style="max-width:1180px;margin:0 auto;padding:0 5% 2px;text-align:center;color:#7b7070;font-size:11px;letter-spacing:.2px">🔐 Secure checkout &nbsp; • &nbsp; COD available &nbsp; • &nbsp; WhatsApp order confirmation</div>
+
 <main class="layout">
   <section class="card">
-    <h2>Delivery Details</h2>
+    <div class="checkout-kicker">ETHNIC CART · SECURE ORDER</div><h2>Delivery Details</h2>
     <p class="sub">Enter your details carefully so we can prepare your order without delay.</p>
 
     <form id="orderForm">
@@ -203,8 +333,8 @@ textarea{min-height:92px;resize:vertical}
         <strong>COD</strong>
       </div>
 
-      <button class="cta" type="submit">Continue on WhatsApp →</button>
-      <div class="small-note">By continuing, you confirm that the delivery information is correct.</div>
+      <button class="cta" type="submit">Place Order on WhatsApp&nbsp; →</button>
+      <div class="small-note">🔒 Your details are used only to prepare your order. &nbsp; • &nbsp; Cash on Delivery available.</div>
     </form>
   </section>
 
